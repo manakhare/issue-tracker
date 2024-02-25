@@ -1,9 +1,14 @@
+"use client";
 import Link from 'next/link'
 import React from 'react'
 import { IoBugSharp } from "react-icons/io5";
+import { usePathname } from 'next/navigation';
+import classnames from 'classnames';
 
 
 const Navbar = () => {
+    const currentPath = usePathname(); //this is a browser API. We can only use browser APIs in client components.
+
     const links = [
         {label : 'Dashboard', href : '/'},
         {label : 'Issues', href: '/issues'}
@@ -15,7 +20,11 @@ const Navbar = () => {
             {links.map(link => 
                 <Link 
                     key={link.href} 
-                    className='text-zinc-200 hover:text-zinc-50 transition-colors' 
+                    className={classnames({
+                        'text-zinc-200': link.href === currentPath,
+                        'text-zinc-400': link.href !== currentPath,
+                        'hover:text-zinc-50 transition-colors': true,
+                    })}  
                     href={link.href}>
                         {link.label}
                 </Link>)}
